@@ -8,19 +8,20 @@ jobs:
     steps:
       - name: Call dev api/development/identify-by-domain
         if: ${{ github.ref == 'refs/heads/master' }}
-        run: |
-          curl --request POST \
-          --url $URL \
-          --header 'Authorization: Bearer ${{ secrets.API_SECRET_KEY }}'
         env:
           URL: '${{ secrets.DEV_API_URL }}/api/development/identify-by-domain'
-      - name: Call prod api/development/identify-by-domain
-        if: ${{ github.ref == 'refs/heads/prodenv' }}
         run: |
           curl --request POST \
           --url $URL \
           --header 'Authorization: Bearer ${{ secrets.API_SECRET_KEY }}'
+
+      - name: Call prod api/development/identify-by-domain
+        if: ${{ github.ref == 'refs/heads/prodenv' }}
         env:
           URL: '${{ secrets.PROD_API_URL }}/api/development/identify-by-domain'
+        run: |
+          curl --request POST \
+          --url $URL \
+          --header 'Authorization: Bearer ${{ secrets.API_SECRET_KEY }}'
       - name: echo value
         run: echo 'Hello world. This is running'
