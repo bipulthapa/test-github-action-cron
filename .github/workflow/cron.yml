@@ -1,7 +1,7 @@
 name: 1-day-mixpanel-orgtype-sync
 on:
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '*/5 * * * *'
 jobs:
   cron:
     runs-on: ubuntu-20.04
@@ -24,3 +24,5 @@ jobs:
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
           URL: '${{ secrets.PROD_API_URL }}/api/development/identify-by-domain'
+      - name: echo value
+        run: echo "Hello world. This is running"
