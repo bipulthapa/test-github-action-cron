@@ -1,0 +1,26 @@
+name: 1-day-mixpanel-orgtype-sync
+on:
+  schedule:
+    - cron: '0 0 * * *'
+jobs:
+  cron:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Call dev api/development/identify-by-domain
+        if: ${{ github.ref == 'refs/heads/main' }}
+        run: |
+          curl --request POST \
+          --url $URL \
+          --header 'Authorization: Bearer ${{ secrets.API_SECRET_KEY }}'
+        env:
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+          URL: '${{ secrets.DEV_API_URL }}/api/development/identify-by-domain'
+      - name: Call prod api/development/identify-by-domain
+        if: ${{ github.ref == 'refs/heads/prodenv' }}
+        run: |
+          curl --request POST \
+          --url $URL \
+          --header 'Authorization: Bearer ${{ secrets.API_SECRET_KEY }}'
+        env:
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+          URL: '${{ secrets.PROD_API_URL }}/api/development/identify-by-domain'
