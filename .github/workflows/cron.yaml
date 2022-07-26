@@ -25,4 +25,4 @@ jobs:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
           URL: '${{ secrets.PROD_API_URL }}/api/development/identify-by-domain'
       - name: echo value
-        run: echo "Hello world. This is running"
+        run: echo 'Hello world. This is running'
