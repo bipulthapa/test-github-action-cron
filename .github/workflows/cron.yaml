@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       -name: test env values
-        run: echo $URL
+        run: echo "$URL"
         env:
           URL: ${{ format('{0}/{1}', secrets.DEV_API_URL, '/api/development/identify-by-domain') }}
       - name: Call dev api/development/identify-by-domain
