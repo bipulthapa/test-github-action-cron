@@ -9,8 +9,8 @@ jobs:
     env:
       URL: ${{ format('{0}/{1}', secrets.DEV_API_URL, '/api/development/identify-by-domain') }}
     steps:
-      - name: test env values
-        run: echo "$URL"
+      - name: Running cron-dev
+        run: echo "Running cron-dev"
       - name: Call dev api/development/identify-by-domain
         run: |
           curl --request GET \
@@ -22,8 +22,8 @@ jobs:
     env:
       URL: ${{ format('{0}/{1}', secrets.PROD_API_URL, '/api/development/identify-by-domain') }}
     steps:
-      - name: test cron-prod
-        run: echo "Hello world"
+      - name: Running cron-prod
+        run: echo "Running cron-prod"
       - name: Call prod api/development/identify-by-domain
         run: |
           curl --request GET \
