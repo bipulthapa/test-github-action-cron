@@ -14,7 +14,7 @@ jobs:
         if: ${{ github.ref == 'refs/heads/master' }}
         run: |
           curl --request GET \
-          --url $URL \
+          --url "$URL" \
           --header 'Authorization: Bearer ${{ secrets.API_SECRET_KEY }}'
         env:
           URL: ${{ format('{0}/{1}', secrets.DEV_API_URL, '/api/development/identify-by-domain') }}
@@ -22,7 +22,7 @@ jobs:
         if: ${{ github.ref == 'refs/heads/prodenv' }}
         run: |
           curl --request GET \
-          --url $URL \
+          --url "$URL" \
           --header 'Authorization: Bearer ${{ secrets.API_SECRET_KEY }}'
         env:
           URL: ${{ format('{0}/{1}', secrets.PROD_API_URL, '/api/development/identify-by-domain') }}
