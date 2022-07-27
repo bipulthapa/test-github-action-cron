@@ -9,16 +9,15 @@ jobs:
       - name: Call dev api/development/identify-by-domain
         if: ${{ github.ref == 'refs/heads/master' }}
         env:
-          URL: '${{ secrets.DEV_API_URL }}/api/development/identify-by-domain'
+          URL: ${{ format('{0}/{1}', secrets.DEV_API_URL, '/api/development/identify-by-domain') }}
         run: |
           curl --request POST \
           --url $URL \
           --header 'Authorization: Bearer ${{ secrets.API_SECRET_KEY }}'
-
       - name: Call prod api/development/identify-by-domain
         if: ${{ github.ref == 'refs/heads/prodenv' }}
         env:
-          URL: '${{ secrets.PROD_API_URL }}/api/development/identify-by-domain'
+          URL: ${{ format('{0}/{1}', secrets.PROD_API_URL, '/api/development/identify-by-domain') }}
         run: |
           curl --request POST \
           --url $URL \
