@@ -3,32 +3,29 @@ on:
   schedule:
     - cron: '*/2 * * * *'
 jobs:
-  cron:
+  cron-dev:
+    if: ${{ github.ref == 'refs/heads/master' }}
     runs-on: ubuntu-20.04
+    env:
+      URL: ${{ format('{0}/{1}', secrets.DEV_API_URL, '/api/development/identify-by-domain') }}
     steps:
       - name: test env values
         run: echo "$URL"
-        env:
-          URL: ${{ format('{0}/{1}', secrets.DEV_API_URL, '/api/development/identify-by-domain') }}
-      - name: test env values
-        run: echo "$URL"
-        env:
-          URL: ${{ secrets.DEV_API_URL}}/api/development/identify-by-domain
       - name: Call dev api/development/identify-by-domain
-        if: ${{ github.ref == 'refs/heads/master' }}
         run: |
           curl --request GET \
           --url "$URL" \
           --header 'Authorization: Bearer ${{ secrets.API_SECRET_KEY }}'
-        env:
-          URL: ${{ format('{0}/{1}', secrets.DEV_API_URL, '/api/development/identify-by-domain') }}
+  cron-prod:
+    if: ${{ github.ref == 'refs/heads/prodenv' }}
+    runs-on: ubuntu-20.04
+    env:
+      URL: ${{ format('{0}/{1}', secrets.PROD_API_URL, '/api/development/identify-by-domain') }}
+    steps:
+      - name: test cron-prod
+        run: echo "Hello world"
       - name: Call prod api/development/identify-by-domain
-        if: ${{ github.ref == 'refs/heads/prodenv' }}
         run: |
           curl --request GET \
           --url "$URL" \
           --header 'Authorization: Bearer ${{ secrets.API_SECRET_KEY }}'
-        env:
-          URL: ${{ format('{0}/{1}', secrets.PROD_API_URL, '/api/development/identify-by-domain') }}
-      - name: echo value
-        run: echo 'Hello world. This is running'
